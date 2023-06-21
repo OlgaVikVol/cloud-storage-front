@@ -1,15 +1,15 @@
 import React from "react";
 import { setCookie } from "nookies";
 import styles from "./Auth.module.scss";
-import { Form, Input, Button, notification } from "antd";
-import { LoginFormDTO } from "@/api/dto/auth.dto";
+import { Button, Form, Input, notification } from "antd";
+import { RegisterFormDTO } from "@/api/dto/auth.dto";
 
 import * as Api from "@/api";
 
-export const LoginForm: React.FC = () => {
-  const onSubmit = async (values: LoginFormDTO) => {
+export const RegisterForm: React.FC = () => {
+  const onSubmit = async (values: RegisterFormDTO) => {
     try {
-      const { token } = await Api.auth.login(values);
+      const { token } = await Api.auth.register(values);
 
       notification.success({
         message: "Успешно!",
@@ -23,18 +23,18 @@ export const LoginForm: React.FC = () => {
 
       location.href = "/dashboard";
     } catch (err) {
-      console.warn("LoginForm", err);
+      console.warn(err);
 
       notification.error({
         message: "Ошибка!",
-        description: "Неверный логин или пароль",
+        description: "Ошибка при регистрации",
         duration: 2,
       });
     }
   };
 
   return (
-    <div className={styles.root}>
+    <div className={styles.formBlock}>
       <Form
         name="basic"
         labelCol={{
@@ -56,6 +56,19 @@ export const LoginForm: React.FC = () => {
         </Form.Item>
 
         <Form.Item
+          label="Полное имя"
+          name="fullName"
+          rules={[
+            {
+              required: true,
+              message: "Укажите полное имя",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
           label="Пароль"
           name="password"
           rules={[
@@ -67,6 +80,7 @@ export const LoginForm: React.FC = () => {
         >
           <Input.Password />
         </Form.Item>
+
         <Form.Item
           wrapperCol={{
             offset: 8,
@@ -74,7 +88,7 @@ export const LoginForm: React.FC = () => {
           }}
         >
           <Button type="primary" htmlType="submit">
-            Войти
+            Регистрация
           </Button>
         </Form.Item>
       </Form>
