@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./FileList.module.scss";
 import { FileItem } from "@/api/dto/files.dto";
 import { FileCard } from "@/components/FileCard";
-// import Selecto from "react-selecto";
+import Selecto from "react-selecto";
 
 export type FileSelectType = "select" | "unselect";
 
@@ -20,7 +20,7 @@ export const FileList: React.FC<FileListProps> = ({ items, onFileSelect }) => {
         </div>
       ))}
 
-      {/* <Selecto
+      <Selecto
         container=".files"
         selectableTargets={[".file"]}
         selectByClick
@@ -38,7 +38,7 @@ export const FileList: React.FC<FileListProps> = ({ items, onFileSelect }) => {
             onFileSelect(Number(el.dataset["id"]), "unselect");
           });
         }}
-      /> */}
+      />
     </div>
   );
 };
